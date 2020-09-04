@@ -14,7 +14,8 @@
       </FormItem>
       <FormItem label="科室:">
     <Input type="text" v-model="department" placeholder="department..."></Input><br><br>
-    <Button type="error" size="large" @click="regis">挂号</Button>
+    <Button type="success" size="large" @click="regis">挂号</Button>
+        <Button type="error" size="large" @click="logout">退出登录</Button>
       </FormItem>
     </Form>
   </card>
@@ -33,6 +34,11 @@ export default {
     }
   },
   methods: {
+    logout() {
+      this.$router.push({
+        path: '/'
+      })
+    },
     regis: function () {
       axios.get('http://chongyouyun.free.vipnps.vip/addRegistration', {
         params: {

@@ -15,8 +15,8 @@
       <Col span="6">
         <card style="height: 633px;">
           <h2 slot="title">修改面板</h2>
-        <div style="padding-left: 115px"><!--  添加人员start-->
-          <Button @click="value3 = true" type="primary">点击添加人员</Button>
+        <div style="padding-left: 50px; display: inline"><!--  添加人员start-->
+          <Button @click="value3 = true" type="primary">添加人员</Button>
           <Drawer
             title="添加人员"
             v-model="value3"
@@ -65,6 +65,7 @@
             </div>
           </Drawer>
         </div><!--  添加人员-->
+          <Button type="error" style="margin-left: 60px" @click="logto">退出登录</Button>
           <Divider></Divider>
           <Form :model="formItem" >
             <FormItem label="姓名">
@@ -80,12 +81,14 @@
               </RadioGroup>
             </FormItem>
             <FormItem label="角色">
-              <Select v-model="workerRole">
-                <Option value="前台管理">前台管理</Option>
-                <Option value="医生">医生</Option>
-                <Option value="人事管理">人事管理</Option>
-                <Option value="药品管理"></Option>
-              </Select>
+              <label>
+                <Select v-model="workerRole">
+                  <Option value="前台管理">前台管理</Option>
+                  <Option value="医生">医生</Option>
+                  <Option value="人事管理">人事管理</Option>
+                  <Option value="药品管理"></Option>
+                </Select>
+              </label>
             </FormItem>
           </Form>
         </card>
@@ -150,18 +153,18 @@ export default {
           title: '角色',
           key: 'workerRole',
           resizable: true,
-          width: 180
+          width: 160
         },
         {
           title: '账户',
           key: 'workerAccount',
           resizable: true,
-          width: 150
+          width: 130
         },
         {
           title: 'Action',
           slot: 'action',
-          width: 150,
+          width: 190,
           align: 'center',
           resizable: true,
         }
@@ -180,6 +183,9 @@ export default {
     this.getAll()
   },
   methods: {
+    logto(){
+      this.$router.push({path: '/'})
+    },
     addWorker(index) {
       axios.get('http://chongyouyun.free.vipnps.vip/addWorker',
         {

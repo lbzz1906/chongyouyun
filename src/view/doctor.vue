@@ -1,7 +1,17 @@
 <template>
   <Row>
     <Col span="3" class="patients">
-      <Input placeholder="输入关键字后回车" @keydown.enter="search"></Input>
+      <label>
+        <Divider></Divider>
+        <Row>
+          <Col span="15">
+            <Input placeholder="输入关键字" v-model="patientName"></Input>
+          </Col>
+          <Col span="8">
+            <Button type="warning" @click="search" style="height: 32px;margin-top: 0">查询</Button>
+          </Col>
+        </Row>
+      </label>
       <card v-for="(item,index) in patientsList" style="height: 180px">
         <p slot="title" style="font-weight: bold;color: #ff0000;font-size: 22px">{{ item.patientID }}号</p>
         <p>姓名: {{ item.patientName }}</p>
@@ -15,23 +25,40 @@
     <Col span="11">
       <card>
         <h2 slot="title">病人情况</h2>
-        <Input  type="text" placeholder="医生编号" v-model.lazy="doctorID"></Input><br>
-        <Input  type="text" placeholder="病人年龄" v-model.lazy="patientAge"></Input><br>
-        <RadioGroup v-model.lazy="patientSex">
-          性别:&nbsp&nbsp&nbsp&nbsp
-          <Radio label="男"></Radio>
-          <Radio label="女"></Radio>
-        </RadioGroup><br><br>
+        <Form>
+          <FormItem>
+            <label>
+              <Input style="width: 200px" type="text" placeholder="医生编号" v-model.lazy="doctorID"></Input>
+            </label><br>
+          </FormItem>
+          <FormItem>
+            <label>
+              <Input style="width: 200px" type="text" placeholder="病人年龄" v-model.lazy="patientAge"></Input>
+            </label><br>
+          </FormItem>
+          <FormItem>
+            <RadioGroup v-model.lazy="patientSex">
+              性别:&nbsp&nbsp&nbsp&nbsp
+              <Radio label="男"></Radio>
+              <Radio label="女"></Radio>
+            </RadioGroup>
+          </FormItem>
+        </Form>
         <Divider>诊断描述</Divider>
         <Input type="textarea" :autosize="{minRows: 5,maxRows: 16}" placeholder="诊断描述..."
-          v-model.lazy="diagnosticDescription"
-          class="text"></Input></card>
+               v-model.lazy="diagnosticDescription"
+               class="text"></Input></card>
     </Col>
     <Col span="10">
       <card>
         <h2 slot="title">处方</h2>
-        <Input type="textarea" :autosize="{minRows: 16,maxRows: 24}" placeholder="编写处方..."
-               class="text" v-model.lazy="prescription"></Input><br><br>
+        <Form>
+          <FormItem>
+            <Input type="textarea" :autosize="{minRows: 16,maxRows: 24}" placeholder="编写处方..."
+                   class="text" v-model.lazy="prescription"></Input>
+          </FormItem>
+        </Form>
+        <Button type="error" @click="logout" style="margin-right: 20px">退出登录</Button>
       </card>
     </Col>
   </Row>
@@ -44,8 +71,7 @@ export default {
   name: "doctor",
   data() {
     return {
-      patientsList: [
-      ],
+      patientsList: [],
       patientName: '',
       patientID: '',
       department: '',
@@ -69,18 +95,23 @@ export default {
       })
   },
   methods: {
+    logout() {
+      this.$router.push({
+        path: '/'
+      })
+    },
     search: function () {
       axios.get('http://chongyouyun.free.vipnps.vip/getMedicalHistory',
         {
           params: {
-            'searchWords': this.searchWords
+            'patientName': this.patientName
           }
         })
         .then((res) => {
-          this.medicineList = res.data
+          this.patientsList = res.data
         })
         .catch((err) => {
-          alert('查无此人!')
+          this.$Message.error('查无此人!')
         })
     },
     write: function (index) {
@@ -128,12 +159,15 @@ export default {
 h2 {
   font-size: 30px;
 }
+
 p {
   margin-left: 16px;
 }
-#inp{
+
+#inp {
   width: 200px;
 }
+
 Button {
   margin: 9px 8px;
   padding-left: 4px;
@@ -142,16 +176,20 @@ Button {
   width: 57px;
   height: 22px;
 }
+
 .patients {
   height: 628px;
   overflow: auto;
 }
+
 .patients::-webkit-scrollbar {
   width: 8px;
 }
+
 .patients::-webkit-scrollbar-track {
   background-color: #d6ebff;
 }
+
 .patients::-webkit-scrollbar-thumb {
   background-color: #6babfc;
 }

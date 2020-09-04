@@ -61,15 +61,20 @@ export default {
           'workerRole': this.workerRole
         }
       }).then((res) => {
-        this.$Message.success('登陆成功!!');
           if (this.workerRole == '前台管理') {
+            this.$Message.success('前台管理登陆成功!!');
             this.$router.push({path: '/register'})
           } else if (this.workerRole == '医生') {
+            this.$Message.success('医生登陆成功!!');
             this.$router.push({path: '/doctor'})
           } else if (this.workerRole == '药品管理') {
+            this.$Message.success('药品管理登陆成功!!');
             this.$router.push({path: '/drugs'})
           } else if (this.workerRole == '人事管理') {
+            this.$Message.success('人事管理登陆成功!!');
             this.$router.push({path: '/rooter'})
+          }else {
+            this.$Message.error('请选择角色')
           }
       })
         .catch((err) => {

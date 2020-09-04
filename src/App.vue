@@ -5,7 +5,7 @@
       <img :src="ico">
       <h1>重邮云医院管理平台</h1>
       <p class="weather">
-        <p1>{{ city + ":"}}</p1><br><br>
+        <p1 style="font-size: 15px;color: #8f4728;font-weight: bold">{{ city + ":"}}</p1><br><br>
         <p1 style="color: red">{{weather.high}}</p1><br>
         <p1 style="color: blue">{{weather.low}}</p1><br>
           <p1 style="color: coral">{{weather.type}}</p1>
@@ -56,7 +56,7 @@ img{
 }
 .weather {
   margin-right: 20px;
-  padding: 15px 20px 15px 20px;
+  padding: 13px 20px 14px 20px;
   color: #ffffff;
   float: right;
   border: #cce7ff solid 2px;

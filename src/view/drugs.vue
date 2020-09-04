@@ -3,7 +3,7 @@
     <Row>
       <Col span="18" class="left">
 
-        <card class="drugs" v-for="(item,index) in medicineList" style="border: 1px solid #0088ff;border-radius: 10px">
+        <card class="drugs" v-for="(item,index) in medicineList" style="border: 1px solid #0088ff;border-radius: 10px;height: 420px">
           <h slot="title">{{ item.medicineName }}</h>
           <Divider>药品编号</Divider>
           <p>{{ item.medicineID }}</p>
@@ -44,7 +44,8 @@
             </FormItem>
           </Form>
           <Button type="success" @click="addDrugs"  style="float: right;">添加</Button>
-          <Button type="error" @click="router"  style="float: right;margin-right: 30px">出库管理</Button>
+          <Button type="warning" @click="router"  style="float: right;margin-right: 30px">出库管理</Button>
+          <Button type="error" @click="logout"  style="float: right;margin-right: 30px">退出登录</Button>
         </Card>
       </Col>
     </Row>
@@ -75,6 +76,11 @@ export default {
       })
   },
   methods: {
+    logout() {
+      this.$router.push({
+        path: '/'
+      })
+    },
     router(){
       this.$router.push('out')
     },

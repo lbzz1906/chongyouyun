@@ -15,6 +15,10 @@
           <Input type="text" v-model="formInline.workerName" placeholder="Username">
           </Input>
         </FormItem>
+        <FormItem prop="department">
+          <Input type="text" v-model="department" placeholder="department">
+          </Input>
+        </FormItem>
         <FormItem prop="account">
           <Input type="text" v-model="formInline.workerAccount" placeholder="UserAccount">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -55,10 +59,11 @@ export default {
       workerRole: '',
       workerSex: '',
       workerAge: '',
+      department:'',
       formInline: {
         workerAccount: '',
         workerName: '',
-        workerPassword: ''
+        workerPassword: '',
       },
       ruleInline: {
         workerAccount: [
@@ -83,6 +88,7 @@ export default {
           'workerRole': this.workerRole,
           'workerSex': this.workerSex,
           'workerAge': this.workerAge,
+          'department':this.department,
           'workerAccount': this.formInline.workerAccount
         }
       }).then((res) => {
